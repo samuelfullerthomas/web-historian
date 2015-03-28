@@ -11,14 +11,15 @@ exports.headers = headers = {
 };
 
 exports.serveAssets = function(res, asset, callback) {
-	callback(asset, function(err, data){
-		if (err) {
+	var data = callback(asset, function(err, data){
+		if(err){
 			res.writeHead(404, headers);
-			res.end();
+			res.end()
 		}
 		res.writeHead(200, headers);
 		res.end(data);
 	});
+
 };
 
 exports.sendResponse = function(reponse, data, statusCode){
@@ -27,17 +28,12 @@ exports.sendResponse = function(reponse, data, statusCode){
   response.end(data);
 };
 
-exports.fetchData = function(request, cb){
-  var data = "";
-  request.on('data', function(chunk){
-    data += chunk
-  });
+exports.postData = function(response, url){
+	var newfile = JSON.parse(url);
+	archive.addUrlToList(newfile);
 
-  request.on('end', function(){
-    cb(JSON.parse(data));
-  });
-
+	console.log('File saved!');
+	response.writeHead(302);
+	response.end();
 };
 
-
-// As you progress, keep thinking about what helper functions you can put here!
