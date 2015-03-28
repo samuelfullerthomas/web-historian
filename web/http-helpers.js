@@ -30,7 +30,9 @@ exports.sendResponse = function(reponse, data, statusCode){
 
 exports.postData = function(response, url){
 	var newfile = JSON.parse(url);
-	archive.addUrlToList(newfile);
+	archive.addUrlToList(newfile, function(data){
+		return data;
+	});
 
 	console.log('File saved!');
 	response.writeHead(302);
